@@ -2,6 +2,8 @@
 
 // <- original array
 var n = getRandomInt(25); //<- original array length
+if(n===0)
+n=10;
 let gridInput =  Array(n).fill(getRandomInt(2)).map(()=>Array(n).fill(getRandomInt(2)));
 let timeout = 100;
 for(let row=0;row<n;row++)
