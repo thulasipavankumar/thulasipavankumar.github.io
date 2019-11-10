@@ -26,7 +26,14 @@ var grid = clickableGrid(gridInput[0].length, gridInput.length,function(el,row,c
     entry(row,col,el);
 
 });
-function fillElement({i:i,j:j}){
+function fillElement({i:i,j:j},classToFill){
+    let table = document.getElementsByClassName("grid")[0];
+    let rows = table.getElementsByTagName("tr");
+    let cols = rows[i].getElementsByTagName("td");
+    cols[j].className = classToFill;
+   
+}
+const fillBlockWithUsed=({i:i,j:j})=>{
     let table = document.getElementsByClassName("grid")[0];
     let rows = table.getElementsByTagName("tr");
     let cols = rows[i].getElementsByTagName("td");
@@ -58,8 +65,11 @@ const resetTheValuesInBoxes = () => {
     let rows = table.getElementsByTagName("tr");
     for(let row=0;row<rows.length;row++){
         let cols = rows[row].getElementsByTagName("td");
-        for(let col=0;col<cols.length;col++)
+        for(let col=0;col<cols.length;col++){
+            if(gridInput[row][col]==1)
+                fillElement({i:row,j:col},"block")
             cols[col].innerHTML = ""; 
+        }
     }
 }
 const printFinalResult = (maxCount) =>{
@@ -78,7 +88,7 @@ const entry = (i, j) => {
         let topElement = getTopOfStack();
         if(!isVisited(topElement.i,topElement.j)){
             setElementToVisited(topElement.i,topElement.j);
-            fillElement(topElement)
+            fillBlockWithUsed(topElement,"used")
             finalCount.push(topElement);
             traverse_Possible_Adjacent_Nodes(topElement.i, topElement.j);
         }
