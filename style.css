@@ -11,5 +11,8 @@
 }
 
 .block{
-      background-color:red;
+      background-color:firebrick;
+}
+.used{
+    background-color:grey;
 }

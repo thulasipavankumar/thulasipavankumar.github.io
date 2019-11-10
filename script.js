@@ -1,11 +1,15 @@
-const gridInput =  [
-     [ 0, 0, 1, 0, 1 ],
-     [ 1, 1, 1, 0, 0 ],
-     [ 1, 1, 0, 1, 1 ],
-     [ 0, 0, 0, 0, 0 ],
-     [ 1, 1, 1, 0, 0 ],
-];
-var currentCount =0;
+
+
+// <- original array
+var n = getRandomInt(25); //<- original array length
+let gridInput =  Array(n).fill(getRandomInt(2)).map(()=>Array(n).fill(getRandomInt(2)));
+let timeout = 100;
+for(let row=0;row<n;row++)
+    for(let col=0;col<n;col++)
+        gridInput[row][col] = getRandomInt(2);
+
+
+let visitedArr = new Array(n).fill(false).map(() => new Array(n).fill(false));
 var adjacentArray =[];
 function getRandomInt(max) {
   return Math.floor(Math.random() * Math.floor(max));
@@ -16,51 +20,71 @@ var m = Array(r).fill(getRandomInt(2)).map(()=>Array(c).fill(getRandomInt(2)));
 // console.log(m);
 var grid = clickableGrid(gridInput[0].length, gridInput.length,function(el,row,col,i){
     var columnIndex = col;
-    // adjacentArray =[];
-    // findAdjacent(i,row,col);
     el.innerHTML = gridInput[row][col];
-    entry(row,col);
+    entry(row,col,el);
 
 });
-function fillElement(){
-   // document.
-   // el.innerHTML = gridInput[row][col];
+function fillElement({i:i,j:j}){
+    let table = document.getElementsByClassName("grid")[0];
+    let rows = table.getElementsByTagName("tr");
+    let cols = rows[i].getElementsByTagName("td");
+   timeout+=100;
+   
+    setTimeout(function(){ 
+        cols[j].innerHTML = 1; 
+        cols[j].className = "used";
+    }, timeout);
 }
-  // var xPosition = 4,yPosition = 4;
-	// var count = 0;
-	// var temp = {};
+
   let finalCount = [],
     temparr = [];
 let originalMatrix = [];
 
 
-
-
-let arr = gridInput;  // <- original array
-var n = arr.length; //<- original array length
-let visitedArr = new Array(n).fill(false).map(() => new Array(n).fill(false));
-console.log("length",n);
-const resetAllValues = () => { 
-        visitedArr = new Array(n).fill(false).map(() => new Array(n).fill(false));
+const resetAllValues = () => {  
+        resetTheValuesInBoxes();
+        resetArrays();
+        timeout=100;
+}
+const resetArrays = () => {
+    visitedArr = new Array(n).fill(false).map(() => new Array(n).fill(false));
         temparr = [];
         finalCount = [];
+}
+const resetTheValuesInBoxes = () => {
+    let table = document.getElementsByClassName("grid")[0];
+    let rows = table.getElementsByTagName("tr");
+    for(let row=0;row<rows.length;row++){
+        let cols = rows[row].getElementsByTagName("td");
+        for(let col=0;col<cols.length;col++)
+            cols[col].innerHTML = ""; 
+    }
+}
+const printFinalResult = (maxCount) =>{
+    var paragraph = document.getElementById("output");
+    paragraph.innerText = "Final Count is "+maxCount;
 }
 
 const entry = (i, j) => {
     resetAllValues();
     pushInitialElement(i,j);
     //setElementToVisited(i,j);
+    if(isEmptyBlock(i,j)){
+        return
+    }
     while (hasMoreElements()) {
         let topElement = getTopOfStack();
         if(!isVisited(topElement.i,topElement.j)){
             setElementToVisited(topElement.i,topElement.j);
+            fillElement(topElement)
             finalCount.push(topElement);
             traverse_Possible_Adjacent_Nodes(topElement.i, topElement.j);
         }
     }
+    printFinalResult(finalCount.length);
     console.log(finalCount);
-
 }
+const isEmptyBlock = (i,j) => (gridInput[i][j]===0)
 const pushInitialElement = (i,j) => temparr.push({ i: i, j: j })
 const isVisited = (i, j) => visitedArr[i][j];
 
@@ -88,15 +112,13 @@ const setElementToVisited = (i,j) =>{
     visitedArr[i][j] = true;
 }
 const isValid = (i, j) => {
-          console.log("trying", i,j,n)
     if (i >= 0 && j >= 0 && i < n && j < n)
         if (!isVisited(i, j))
-            if (arr[i][j] === 1)
+            if (gridInput[i][j] === 1)
                 return true;
     return false;
 }
 const traverse_Possible_Adjacent_Nodes = (i, j) => {
-     console.log("trying adjacent for",i,j);
     tryBottom(i, j);
     tryTop(i, j);
     tryLeft(i, j);
@@ -106,9 +128,9 @@ const getTopOfStack = () => temparr.pop();
 const hasMoreElements = () => temparr.length ? true : false;
 
 function load(){
-document.body.appendChild(grid);
+    document.body.appendChild(grid);
 }
-     
+
 function clickableGrid( rows, cols, callback ){
     var i=0;
     var grid = document.createElement('table');
