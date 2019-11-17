@@ -5,7 +5,7 @@ var n = getRandomInt(25); //<- original array length
 if(n===0)
 n=10;
 let gridInput =  Array(n).fill(getRandomInt(2)).map(()=>Array(n).fill(getRandomInt(2)));
-let timeout = 100;
+let timeout = 50;
 for(let row=0;row<n;row++)
     for(let col=0;col<n;col++)
         gridInput[row][col] = getRandomInt(2);
@@ -37,7 +37,7 @@ const fillBlockWithUsed=({i:i,j:j})=>{
     let table = document.getElementsByClassName("grid")[0];
     let rows = table.getElementsByTagName("tr");
     let cols = rows[i].getElementsByTagName("td");
-   timeout+=100;
+   timeout+=50;
    
     setTimeout(function(){ 
         cols[j].innerHTML = 1; 
