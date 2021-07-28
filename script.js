@@ -166,6 +166,7 @@ function clickableGrid( rows, cols, callback ){
     }
     return grid;
 }
+/*
 function GetCellValues() {
    
     var table = document.getElementsByTagName("table")[0];
@@ -177,3 +178,5 @@ function GetCellValues() {
         }
     }
 }
+
+*/
