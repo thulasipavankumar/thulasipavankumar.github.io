@@ -166,3 +166,14 @@ function clickableGrid( rows, cols, callback ){
     }
     return grid;
 }
+function GetCellValues() {
+   
+    var table = document.getElementsByTagName("table")
+    for (var r = 0, n = table.rows.length; r < n; r++) {
+        for (var c = 0, m = table.rows[r].cells.length; c < m; c++) {
+           var paragraph = document.getElementById("output");
+     
+           paragraph.innerText +=table.rows[r].cells[c].innerHTML+"<br>";
+        }
+    }
+}
