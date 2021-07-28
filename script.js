@@ -4,8 +4,8 @@
 var n = getRandomInt(25); //<- original array length
 if(n===0)
 n=10;
-//let gridInput =  Array(n).fill(getRandomInt(2)).map(()=>Array(n).fill(getRandomInt(2)));
-let gridInput =  Array(n).fill(getRandomInt(2))
+let gridInput =  Array(n).fill(getRandomInt(2)).map(()=>Array(n).fill(getRandomInt(2)));
+//let gridInput =  Array(n).fill(getRandomInt(2))
 let timeout = 50;
 for(let row=0;row<n;row++)
     for(let col=0;col<n;col++)
