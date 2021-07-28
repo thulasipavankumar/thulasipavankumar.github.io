@@ -168,7 +168,7 @@ function clickableGrid( rows, cols, callback ){
 }
 function GetCellValues() {
    
-    var table = document.getElementsByTagName("table")
+    var table = document.getElementsByTagName("table")[0];
     for (var r = 0, n = table.rows.length; r < n; r++) {
         for (var c = 0, m = table.rows[r].cells.length; c < m; c++) {
            var paragraph = document.getElementById("output");
