@@ -74,8 +74,8 @@ const resetTheValuesInBoxes = () => {
     }
 }
 const printFinalResult = (maxCount) =>{
-    var paragraph = document.getElementById("output");
-    paragraph.innerText = "Final Count is "+maxCount;
+   // var paragraph = document.getElementById("output");
+   // paragraph.innerText = "Final Count is "+maxCount;
 }
 
 const entry = (i, j) => {
@@ -95,7 +95,7 @@ const entry = (i, j) => {
         }
     }
     printFinalResult(finalCount.length);
-    console.log(finalCount);
+    //console.log(finalCount);
 }
 const isEmptyBlock = (i,j) => (gridInput[i][j]===0)
 const pushInitialElement = (i,j) => temparr.push({ i: i, j: j })
@@ -166,6 +166,7 @@ function clickableGrid( rows, cols, callback ){
     }
     return grid;
 }
+setInterval(function(){ entry(getRandomInt(gridInput.length),getRandomInt(gridInput[0].length)); }, 300);
 /*
 function GetCellValues() {
    
